@@ -1,31 +1,31 @@
 <?php
 class Math {
-  public function add(...$args) {
-    $total = array_shift($args);
+  public function add($arg1, $arg2, ...$args) {
+    $total = $arg1 + $arg2;
     foreach($args as $arg) {
       $total += $arg;
     }
     return $total;
   }
 
-  public function subtract(...$args) {
-    $total = array_shift($args);
+  public function subtract($arg1, $arg2, ...$args) {
+    $total = $arg1- $arg2;
     foreach($args as $arg) {
       $total -= $arg;
     }
     return $total;
   }
 
-  public function multiply(...$args) {
-    $total = array_shift($args);
+  public function multiply($arg1, $arg2, ...$args) {
+    $total = $arg1 * $arg2;
     foreach($args as $arg) {
       $total *= $arg;
     }
     return $total;
   }
 
-  public function divide(...$args) {
-    $total = array_shift($args);
+  public function divide($arg1, $arg2, ...$args) {
+    $total = $arg1 / $arg2;
     foreach($args as $arg) {
       $total /= $arg;
     }
