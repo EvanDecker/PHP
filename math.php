@@ -1,18 +1,34 @@
 <?php
 class Math {
-  public function add($num1, $num2) {
-    return $num1 + $num2;
+  public function add(...$args) {
+    $total = array_shift($args);
+    foreach($args as $arg) {
+      $total += $arg;
+    }
+    return $total;
   }
 
-  public function subtract($num1, $num2) {
-    return $num1 - $num2;
+  public function subtract(...$args) {
+    $total = array_shift($args);
+    foreach($args as $arg) {
+      $total -= $arg;
+    }
+    return $total;
   }
 
-  public function multiply($num1, $num2) {
-    return $num1 * $num2;
+  public function multiply(...$args) {
+    $total = array_shift($args);
+    foreach($args as $arg) {
+      $total *= $arg;
+    }
+    return $total;
   }
 
-  public function divide($num1, $num2) {
-    return $num1 / $num2;
+  public function divide(...$args) {
+    $total = array_shift($args);
+    foreach($args as $arg) {
+      $total /= $arg;
+    }
+    return $total;
   }
 }
