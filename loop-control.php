@@ -5,7 +5,7 @@ for($x = 0; $x < 100; $x+=3) {
 }
 $x = 0;
 
-while($x < count($numbers)) {
+do {
   if($numbers[$x] === 0) echo "First number\n";
   else if($numbers[$x] === 3) echo "Three\n";
   else if($numbers[$x] === 9) {
@@ -22,4 +22,4 @@ while($x < count($numbers)) {
   else if($numbers[$x] % 7 === 0) echo "Sevens are lucky, this number has " . $numbers[$x] / 7 . "\n";
   else if($numbers[$x] % 10 === 0) echo "$numbers[$x] is a round number\n";
   $x++;
-}
+} while ($x < count($numbers));
