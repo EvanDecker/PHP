@@ -1,8 +1,10 @@
 <?php
 require './hierarchy.php';
+use advanced\computers as classes;
 
-$computer = new Computer('5234');
-$workstation = new Workstation($computer);
+$computer = new classes\Computer('5234');
+$workstation = new classes\Workstation($computer);
+$pc = new classes\PC($workstation);
 
 betterEcho('Examples of public properties and functions:');
 betterEcho('You can access public properties and functions from anywhere!');
@@ -32,7 +34,7 @@ betterEcho("\$workstation->getHardware() now returns: ", $workstation->getHardwa
 betterEcho("\$workstation->hardware won't work even after that because hardware is still private.");
 betterEcho("The workstation has a private workstationSecret that only Evan knows! :O");
 betterEcho("\$workstation->revealSecret() won't work because it's a private method! Sad for you! :(");
-betterEcho("If you're not Evan, when you work at the workstation you won't find the secret! It returns: ", $workstation->workAtWorkstation('Greg'));
+betterEcho("If you're Greg (not Evan), when you work at the workstation you won't find the secret! It returns: ", $workstation->workAtWorkstation('Greg'));
 betterEcho("But if you're Evan and you work at the workstation, it returns: ", $workstation->workAtWorkstation('Evan'));
 betterEcho();
 
@@ -44,7 +46,11 @@ betterEcho("Workstation overrides the upgradeHardware method inherited from Comp
 betterEcho("\$workstation->upgradeHardware('cool new stuff!') now returns nothing but prints: ");
 $workstation->upgradeHardware("cool new stuff");
 
-
+betterEcho();
+betterEcho("I realize that I may have overdone it here.");
+betterEcho("Namespace examples are at the top of both files.");
+betterEcho("Interface, trait and closure examples are in hierarchy.php");
+betterEcho("I'll come back to do cleanup on this if I have the time later but I'm anxious about this final part lol");
 
 
 /////////////////////////////////////////////////////////////

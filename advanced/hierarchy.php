@@ -1,9 +1,25 @@
 <?php
-class Computer {
+namespace advanced\computers;
+
+interface ComputerInterface {
+  public function getComputerId();
+  public function getHardware();
+  public function upgradeHardware($newHardware);
+}
+
+trait EvansOpinions {
+  function askEvanHisOpinion(){
+    return betterEcho("Well, I mean, it's a computer, but... ", $this->evansOpinion);
+  }
+  protected $evansOpinion;
+}
+
+class Computer implements ComputerInterface {
   function __construct($computerId, $computerName = 'Walter', $hardware = 'Standard') {
     $this->computerId = $computerId;
     $this->hardware = $hardware;
     $this->computerName = $computerName;
+    $this->evansOpinion = "It's a computer, what about it?";
   }
 
   public function getComputerId(){
@@ -14,22 +30,32 @@ class Computer {
     return $this->hardware;
   }
 
-  public function askEvanHisOpinion() {
-    return $this->evansOpinion;
-  }
-
   public function upgradeHardware($newHardware){
     $this->setHardware($newHardware);
+  }
+
+  public function askEvanHisOpinion(){
+    return $this->evansOpinion;
   }
 
   private function setHardware($newHardware){
     $this->hardware = $newHardware;
   }
 
+  public function computerMalfunction() {
+    //closure
+    $frustration = function() {
+      $angryTyping = "AHHHHHHHHHHHHHH!!!!!! ANGRY!!!!!!!!!!!";
+      betterEcho($angryTyping);
+    };
+    $frustration();
+  }
+
+  protected $evansOpinion;
   public $computerName;
   protected $computerId;
   private $hardware;
-  protected $evansOpinion = "It's a computer, what about it?";
+  
 }
 /////////////////////////////////////////////////////////////
 class Workstation extends Computer {
@@ -49,7 +75,12 @@ class Workstation extends Computer {
   }
 
   public function workAtWorkstation($user){
-    return $user === 'Evan' ? $this->revealSecret() : 'No secret for you!';
+    //closure
+    $noSecret = "No secret for you, $user!";
+    $secretDenial = function() use($noSecret) {
+      return $noSecret;
+    };
+    return $user === 'Evan' ? $this->revealSecret() : $secretDenial();
   }
 
   public function upgradeHardware($newHardware){
@@ -67,11 +98,7 @@ class Workstation extends Computer {
     return $this->workstationSecret;
   }
 
-  // public function askEvanHisOpinion() {
-  //   betterEcho(parent::askEvanHisOpinion());
-  //   return $this->evansOpinion;
-  // }
-
+  use EvansOpinions;
   public $peripherals;
   private $workstationSecret;
 }
@@ -82,9 +109,31 @@ class Mac extends Workstation {
     $this->peripherals = $workstation->peripherals;
     $this->evansOpinion = "Just reminds me of a Big Mac. God, I'm so hungry...";
   }
+  use EvansOpinions;
 }
 class PC extends Workstation {
+  function __construct(Workstation $workstation) {
+    $this->computerId = $workstation->getComputerId();
+    $this->peripherals = $workstation->peripherals;
+    $this->evansOpinion = "It's gonna bluescreen within 5 seconds probably.";
+  }
 
+  private function doWork($cb, $blueCount) {
+    betterEcho("Maybe this time I can get some work done... Oh no, not again!!!");
+    return $cb($blueCount);
+  }
+
+  public function workAtPC() {
+    $blueCount = $this->bluescreenCounter;
+    //closure as a cb function
+    $bluescreen = function() use($blueCount) {
+      return $blueCount + 1;
+    };
+    $this->bluescreenCounter = $this->doWork($bluescreen, $blueCount);
+    betterEcho("The bluescreen count is now at ", $this->bluescreenCounter, ".");
+  }
+  private $bluescreenCounter = 0;
+  use EvansOpinions;
 }
 /////////////////////////////////////////////////////////////
 class Server extends Computer {
