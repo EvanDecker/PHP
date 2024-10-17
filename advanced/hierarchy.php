@@ -18,22 +18,26 @@ class Computer {
     return $this->evansOpinion;
   }
 
+  public function upgradeHardware($newHardware){
+    $this->setHardware($newHardware);
+  }
+
   private function setHardware($newHardware){
     $this->hardware = $newHardware;
   }
 
   public $computerName;
   protected $computerId;
-  protected $hardware;
+  private $hardware;
   protected $evansOpinion = "It's a computer, what about it?";
 }
 /////////////////////////////////////////////////////////////
 class Workstation extends Computer {
   function __construct(Computer $computer, $peripherals = 'Standard') {
-    $this->computerId = $computer->getComputerId();
-    $this->hardware = $computer->getHardware();
+    $this->computerId = $computer->computerId;
     $this->peripherals = $peripherals;
     $this->evansOpinion = "Work, work...";
+    $this->workstationSecret = "Hehehe, Evan's secret candy stash!";
   }
 
   public function getPeripherals() {
@@ -44,19 +48,39 @@ class Workstation extends Computer {
     $this->setPeripherals($newPeripherals);
   }
 
+  public function workAtWorkstation($user){
+    return $user === 'Evan' ? $this->revealSecret() : 'No secret for you!';
+  }
+
+  public function upgradeHardware($newHardware){
+    betterEcho("About to change this Workstation's hardware!");
+    parent::upgradeHardware($newHardware);
+    betterEcho("Phew, all done!");
+    betterEcho("New hardware: ", $this->getHardware());
+  }
+
   protected function setPeripherals($newPeripherals) {
     $this->peripherals = $newPeripherals;
   }
 
+  private function revealSecret() {
+    return $this->workstationSecret;
+  }
+
+  // public function askEvanHisOpinion() {
+  //   betterEcho(parent::askEvanHisOpinion());
+  //   return $this->evansOpinion;
+  // }
+
   public $peripherals;
+  private $workstationSecret;
 }
 
 class Mac extends Workstation {
   function __construct(Workstation $workstation) {
     $this->computerId = $workstation->getComputerId();
-    $this->hardware = $workstation->getHardware();
     $this->peripherals = $workstation->peripherals;
-    $this->evansOpinion = "Just reminds me of a Big Mac. I'm so hungry...";
+    $this->evansOpinion = "Just reminds me of a Big Mac. God, I'm so hungry...";
   }
 }
 class PC extends Workstation {
@@ -74,4 +98,3 @@ class DatabaseServer extends Server {
 
   protected $databaseType;
 }
-/////////////////////////////////////////////////////////////
