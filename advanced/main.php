@@ -19,6 +19,7 @@ betterEcho("But it can be accessed from within the class or its child classes by
 $workstation->upgradePeripherals('My lucky mouse!');
 betterEcho("\$workstation->getPeripherals() now returns: ", $workstation->getPeripherals());
 betterEcho("\$this->computerId = \$computer->computerId; within the constructor of the Workstation class accessed Computer's computerId property directly! No need for getComputerId here!");
+betterEcho();
 
 betterEcho('Examples of private poperties and functions:');
 betterEcho("Similarly to protected properties and functions, private ones cannot be accessed outside of their class.");
@@ -33,6 +34,7 @@ betterEcho("The workstation has a private workstationSecret that only Evan knows
 betterEcho("\$workstation->revealSecret() won't work because it's a private method! Sad for you! :(");
 betterEcho("If you're not Evan, when you work at the workstation you won't find the secret! It returns: ", $workstation->workAtWorkstation('Greg'));
 betterEcho("But if you're Evan and you work at the workstation, it returns: ", $workstation->workAtWorkstation('Evan'));
+betterEcho();
 
 betterEcho("Inherited functions can be overridden!");
 betterEcho("The __construct method from the Computer class is being overridden by the one in the Workstation class.");
